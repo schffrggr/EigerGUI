@@ -6,24 +6,10 @@ import ast
 import time
 from urllib.parse import quote
 
-#to test: 
-#new interrrupt button
-#threshold config param working? if not check if its something with the slash character
-#check every Deigerclient replacement: all the buttons after pram config
 
-# List of configuration parameters for the DEiger detector
+
+# List of changable configuration parameters for the DEiger detector
 config_params = ['beam_center_x', 'beam_center_y', 'count_time', 'counting_mode', 'detector_distance', 'detector_orientation', 'element', 'fast_arm', 'frame_time', 'incident_energy', 'nimages', 'ntrigger', 'photon_energy', 'roi_mode', 'sample_name', 'threshold/1/energy', 'threshold/1/mode', 'threshold/2/energy', 'threshold/2/mode', 'threshold/difference/mode', 'threshold_energy', 'trigger_mode', 'detector_translation', 'kappa_increment', 'kappa_start', 'mask_to_zero', 'omega_increment', 'omega_start', 'phi_increment', 'phi_start', 'total_flux', 'trigger_start_delay', 'two_theta_increment', 'two_theta_start', 'virtual_pixel_correction_applied']
-
-# parameters not in the GUI
-eliminated_params = [
-    "countrate_correction_table",
-    "flatfield",
-    "pixel_mask",
-    "threshold/1/flatfield",
-    "threshold/1/pixel_mask",
-    "threshold/2/flatfield",
-    "threshold/2/pixel_mask"
-]
 
 
 class ConnectionWidget:
@@ -235,7 +221,7 @@ class DEigerGUI:
                     # Make the PUT request for setting the detector configuration parameter
                     response = requests.put(url, json={"value": new_value})
 
-                    # Check if the request was successful (status code 2xx)
+                    # Check if the request was successful 
                     if response.status_code // 100 == 2:
                         self.old_param_values[param] = {
                             "value": new_value,
@@ -305,7 +291,7 @@ class DEigerGUI:
             # Make the PUT request using the requests library
             response = requests.put(url, json=data)
 
-            # Check if the request was successful (status code 2xx)
+            # Check if the request was successful 
             if response.status_code // 100 == 2:
                 # Update the status in the GUI
                 self.update_status(f"Monitor mode set to: {mode.capitalize()}")
@@ -321,7 +307,7 @@ class DEigerGUI:
             # Construct the URL for setting the file name
             url = f"http://{self.ip_address}/filewriter/api/1.8.0/config/name_pattern"
 
-            # Get the new file name from the entry widget in your GUI (replace 'entry_widget' with your actual widget name)
+            # Get the new file name from the entry widget in your GUI 
             new_file_name = self.file_name_entry.get()
 
             # Prepare the data for the PUT request
@@ -330,7 +316,7 @@ class DEigerGUI:
             # Make the PUT request using the requests library
             response = requests.put(url, json=data)
 
-            # Check if the request was successful (status code 2xx)
+            # Check if the request was successful 
             if response.status_code // 100 == 2:
                 # Update the status in the GUI
                 self.update_status(f"File name pattern set: {new_file_name}")
@@ -350,7 +336,7 @@ class DEigerGUI:
             # Make the PUT request for arming the detector
             response = requests.put(url)
 
-            # Check if the request was successful (status code 2xx)
+            # Check if the request was successful 
             if response.status_code // 100 == 2:
                 # Update the status in the GUI
                 self.update_status("Detector armed.")
@@ -376,7 +362,7 @@ class DEigerGUI:
                 # Make the PUT request for triggering the detector
                 response = requests.put(url)
 
-            # Check if the request was successful (status code 2xx)
+            # Check if the request was successful 
             if response.status_code // 100 == 2:
                 # Update the status in the GUI
                 self.update_status("Detector triggered.")
@@ -395,7 +381,7 @@ class DEigerGUI:
             # Make the PUT request for interrupting the measurement
             response = requests.put(url)
 
-            # Check if the request was successful (status code 2xx)
+            # Check if the request was successful 
             if response.status_code // 100 == 2:
                 # Update the status in the GUI
                 self.update_status("Measurement aborted.")
@@ -432,7 +418,7 @@ class DEigerGUI:
             # Make the PUT request for disarming the detector
             response = requests.put(url)
 
-            # Check if the request was successful (status code 2xx)
+            # Check if the request was successful 
             if response.status_code // 100 == 2:
                 # Update the status in the GUI
                 self.update_status("Detector disarmed.")
@@ -474,7 +460,7 @@ class DEigerGUI:
 def create_gui(ip_address, root_conn):
     root_conn.destroy()
     root_main = tk.Tk()
-    app_main = DEigerGUI(root_main, ip_address)
+    DEigerGUI(root_main, ip_address)
     root_main.mainloop()
 
 
